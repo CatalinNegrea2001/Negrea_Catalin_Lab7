@@ -1,11 +1,31 @@
-﻿namespace Negrea_Catalin_Lab7;
+﻿using System;
+using Negrea_Catalin_Lab7.Data;
+using System.IO;
 
-public partial class App : Application
+namespace Negrea_Catalin_Lab7
 {
-	public App()
-	{
-		InitializeComponent();
+    public partial class App : Application
+    {
+        static ShoppingListDatabase database;
 
-		MainPage = new AppShell();
-	}
+        public static ShoppingListDatabase Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new ShoppingListDatabase(
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                                     "ShoppingList.db3"));
+                }
+                return database;
+            }
+        }
+
+        public App()
+        {
+            InitializeComponent();
+            MainPage = new AppShell();
+        }
+    }
 }
